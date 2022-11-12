@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS372 Forum</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- header -->
+    <header id="site-header">
+        <div class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/posts" class="navbar-brand">CS372 Posts</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <main id="site-main">
+        <div class="container">
+            <%- body %>
+        </div>
+    </main>
+
+    <!--footer -->
+    <footer id="site-footer">
+        Copyright &copy; CS372 (Fall 2022)
+    </footer>
+
+</body>
+
+</html>
