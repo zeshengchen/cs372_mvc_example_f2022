@@ -12,5 +12,9 @@ module.exports = router
 router.get('/', mainController.showHome);  
 
 // post routes
+// seed events
+router.get('/posts/seed', postsController.seedPosts)
+// all posts
 router.get('/posts', postsController.showPosts);
+// single post
 router.get('/posts/:slug',postsController.showSingle);

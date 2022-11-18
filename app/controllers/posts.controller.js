@@ -4,12 +4,7 @@ module.exports = {
 
     // show all posts
     showPosts: (req, res) => {
-        // create dummy posts
-        const posts = [
-            { name: 'Homework', slug: 'homework', description: 'Homework is challenging!' },
-            { name: 'Lecture', slug: 'lecture', description: 'Lecture is fun!' },
-            { name: 'Project', slug: 'project', description: 'Course Project is great!' }
-        ]
+        // get all posts
 
         // return a view with data
         res.render('pages/posts', { posts: posts })
@@ -18,8 +13,27 @@ module.exports = {
     // show a single post
     showSingle: (req, res) => {
         // get a single post
-        const post = { name: 'Homework', slug: 'homework', description: 'Homework is challenging!'};
-        
-        res.render('pages/single', {post: post});
-    } 
+        const post = { name: 'Homework', slug: 'homework', description: 'Homework is challenging!' }
+
+        res.render('pages/single', { post: post })
+    },
+
+    // seed our database
+    seedPosts: (req, res) => {
+        // create some posts 
+        const posts = [
+            { name: 'Homework', description: 'Homework is challenging!' },
+            { name: 'Lecture', description: 'Lecture is fun!' },
+            { name: 'Project', description: 'Course Project is great!' }
+        ]
+
+        // use the Post model to insert/save
+        for (post of posts) {
+            var newPost = new Post(post)
+            newPost.save()
+        }
+
+        // seeded!
+        res.send('Database seeded!')
+    }
 }
