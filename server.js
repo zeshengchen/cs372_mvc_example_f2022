@@ -5,6 +5,8 @@ const express = require('express'),
     app = express(),
     port = process.env.PORT || 8080
 
+require('dotenv').config()
+
 // configure our application
 
 // tell express where to look for static assets
@@ -15,7 +17,7 @@ app.set('view engine', 'ejs')
 app.use(expressLayouts)
 
 // connect to our database
-mongoose.connect('mongodb://localhost:27017/cs372-posts', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // set the routes
 app.use(require('./app/routes'))
