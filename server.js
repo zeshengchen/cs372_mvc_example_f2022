@@ -2,6 +2,7 @@
 const express = require('express'),
     expressLayouts = require('express-ejs-layouts'),
     mongoose = require('mongoose'),
+    bodyParser = require('body-parser'),
     app = express(),
     port = process.env.PORT || 8080
 
@@ -18,6 +19,9 @@ app.use(expressLayouts)
 
 // connect to our database
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+
+// use body parser to grab info from a form
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // set the routes
 app.use(require('./app/routes'))

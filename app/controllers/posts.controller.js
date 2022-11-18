@@ -3,7 +3,9 @@ const Post = require('../models/post')
 module.exports = {
     showPosts: showPosts,
     showSingle: showSingle,
-    seedPosts: seedPosts
+    seedPosts: seedPosts,
+    showCreate: showCreate,
+    processCreate: processCreate
 }
 
 /** 
@@ -57,4 +59,31 @@ function seedPosts(req, res) {
 
     // seeded!
     res.send('Database seeded!')
+}
+
+/**
+ * Show the create form
+ */
+function showCreate(req, res) {
+    res.render('pages/create')
+}
+
+/**
+ * Process the creation form
+ */
+function processCreate(req, res) {
+    // create a new post
+    const post = new Post({
+        name: req.body.name,
+        description: req.body.description
+    })
+
+    // save post 
+    post.save((err) => {
+        if (err)
+            throw err
+
+        // redirect to the newly created post
+        res.redirect(`/posts/${post.slug}`)
+    })
 }
