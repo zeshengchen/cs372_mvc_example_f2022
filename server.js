@@ -17,7 +17,7 @@ app.set('view engine', 'ejs')
 app.use(expressLayouts)
 
 // connect to our database
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // set the routes
 app.use(require('./app/routes'))
