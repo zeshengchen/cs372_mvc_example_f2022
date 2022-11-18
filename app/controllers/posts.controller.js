@@ -6,7 +6,9 @@ module.exports = {
     showSingle: showSingle,
     seedPosts: seedPosts,
     showCreate: showCreate,
-    processCreate: processCreate
+    processCreate: processCreate,
+    showEdit: showEdit,
+    processEdit: processEdit
 }
 
 /** 
@@ -21,7 +23,11 @@ function showPosts(req, res) {
         }
 
         // return a view with data
-        res.render('pages/posts', { posts: posts })
+        // return a view with data
+        res.render('pages/posts', {
+            posts: posts,
+            success: req.flash('success')
+        })
     })
 }
 
@@ -106,5 +112,50 @@ async function processCreate(req, res) {
 
         // redirect to the newly created post
         res.redirect(`/posts/${post.slug}`)
+    })
+}
+
+/**
+ * Show the edit form
+ */
+function showEdit(req, res) {
+    Post.findOne({ slug: req.params.slug }, (err, post) => {
+        res.render('pages/edit', {
+            post: post,
+            errors: req.flash('errors')
+        })
+    })
+}
+
+/** 
+ * Process the eidt form
+ */
+async function processEdit(req, res) {
+    // validate information
+    await check('name', 'Name is required').notEmpty().run(req)
+    await check('description', 'Description is required').notEmpty().run(req)
+
+    // if there are errors, redirect and save errors to flash
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        req.flash('errors', errors.errors.map(err => err.msg))
+        return res.redirect(`/posts/${req.params.slug}/edit`)
+    }
+
+    // finding a current post 
+    Post.findOne({ slug: req.params.slug }, (err, post) => {
+        // updating the post
+        post.name = req.body.name
+        post.description = req.body.description
+
+        post.save((err) => {
+            if (err)
+                throw err
+
+            // success flash message
+            // redirect back to the /posts
+            req.flash('success', 'Successfully updated post.')
+            res.redirect('/posts')
+        })
     })
 }
