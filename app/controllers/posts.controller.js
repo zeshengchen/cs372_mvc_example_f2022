@@ -10,18 +10,30 @@ module.exports = {
  * show all posts
  */
 function showPosts(req, res) {
-    // return a view with data
-    res.render('pages/posts', { posts: posts })
+    // get all posts
+    Post.find({}, (err, posts) => {
+        if (err) {
+            res.status(404)
+            res.send('Posts not found')
+        }
+
+        // return a view with data
+        res.render('pages/posts', { posts: posts })
+    })
 }
 
 /**
  * show a single post
  */
 function showSingle(req, res) {
-    // get a single event
-    const post = { name: 'Homework', slug: 'homework', description: 'Homework is challenging!' }
-
-    res.render('pages/single', { post: post })
+    // get a single post 
+    Post.findOne({ slug: req.params.slug }, (err, post) => {
+        if (err) {
+            res.status(404)
+            res.send('Post not found!')
+        }
+        res.render('pages/single', { post: post })
+    })
 }
 
 /**
