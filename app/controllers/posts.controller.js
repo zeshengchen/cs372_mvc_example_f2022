@@ -28,10 +28,12 @@ module.exports = {
         ]
 
         // use the Post model to insert/save
-        for (post of posts) {
-            var newPost = new Post(post)
-            newPost.save()
-        }
+        Post.deleteMany({}, () => {
+            for (let post of posts) {
+                let newPost = new Post(post)
+                newPost.save()
+            }
+        })
 
         // seeded!
         res.send('Database seeded!')
