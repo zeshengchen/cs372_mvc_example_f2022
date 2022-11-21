@@ -7,5 +7,3 @@ https://scotch.io/courses/create-a-crud-app-with-node-and-mongodb
 https://github.com/scotch-io/node-crud-course
 
 "Create a CRUD App with Node and MongoDB" by Chris Sevilleja
-
-Note: Bootstrap is still using an old verion "3.3.7", instead of the latest version.
